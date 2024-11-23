@@ -9,6 +9,6 @@ generate: # Auto-generates code for .templ files and tailwindcss.
 	templ generate
 	tailwindcss build -o ./app/assets/stylesheets/tailwind.css --minify
 
-.PHONY: migrate
-migrate: # Creates a new migration in migrations with the given name.
-	migrate create -ext sql -dir migrations -seq -digits 4 $(NAME)
+.PHONY: migration
+migration: # Creates a new migration in db/migrations with the given name.
+	migrate create -ext sql -dir db/migrations -seq -digits 4 $(NAME)
