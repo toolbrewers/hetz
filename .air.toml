@@ -1,0 +1,60 @@
+# Working directory
+root = "."
+tmp_dir = "tmp"
+
+[build]
+# Array of commands to run before each build
+pre_cmd = ["make generate"]
+
+# Shell command. Can also use `make`
+cmd = "go build -o ./tmp/main ."
+
+# Array of commands to run after ^C (exit)
+post_cmd = []
+
+# Binary returned from `cmd`
+bin = "tmp/main"
+
+# Customize binary
+full_bin = "./tmp/main"
+
+# Watch these filename extensions
+include_ext = ["go", "tpl", "tmpl", "templ", "html"]
+
+# Ignore this filename extensions or directories
+exclude_dir = ["tmp", "vendor", "static"]
+
+# Exclude specific regular expressions
+exclude_regex = ["_test\\.go"]
+
+# Exclude unchanged files
+exclude_unchanged = true
+
+# Follow symlink for directories
+follow_symlink = true
+
+# Places a log file in your `tmp_dir`
+log = "air.log"
+
+# Stop running old binary when build errors occur
+stop_on_error = true
+
+[log]
+# Show log time
+time = true
+
+[color]
+# Customize each part's color. If no color found, use the raw app log
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+# Delete `tmp` folder on exit
+clean_on_exit = true
+
+[screen]
+# Clear screen and keep scroll on rebuild
+clear_on_rebuild = true
+keep_scroll = true
