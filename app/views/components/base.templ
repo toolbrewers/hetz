@@ -1,0 +1,21 @@
+package components
+
+templ Base(title string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title>{ title }</title>
+			<meta name="viewport" content="width=device-width,initial-scale=1"/>
+			<meta name="apple-mobile-web-app-capable" content="yes"/>
+			<link rel="icon" href="/icon.png" type="image/png"/>
+			<link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+			<link rel="apple-touch-icon" href="/icon.png"/>
+			<link rel="stylesheet" href="/assets/stylesheets/tailwind.css"/>
+			<script src="/assets/javascript/htmx.min.js"></script>
+			<script src="/assets/javascript/response-targets.js"></script>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}
