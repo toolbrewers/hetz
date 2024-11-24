@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
 	"os"
 	"strconv"
@@ -11,6 +12,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
+	"github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -45,6 +47,13 @@ func (c *Controller) Signup(ctx echo.Context) error {
 		Password:     string(bytes),
 		HetznerToken: req.HetznerToken,
 	})
+	if err != nil {
+		if errors.Is(err, sqlite3.ErrConstraintUnique) {
+			return ctx.String(http.StatusBadRequest, "Username or Email already in use.")
+		}
+
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
 
 	token, err := jwt.NewWithClaims(
 		jwt.SigningMethodHS256,
