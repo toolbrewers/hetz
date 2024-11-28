@@ -10,15 +10,32 @@ type Repository struct {
 	DB *sql.DB
 }
 
-func New() (*Repository, error) {
-	db, err := sql.Open("sqlite3", "./db/app.db")
+type Config struct {
+	DBPath string
+}
+
+var DB *Repository
+
+// aka. default config
+func NewConfig() *Config {
+	return &Config{
+		DBPath: "db/app.db",
+	}
+}
+
+func New(config *Config) *Repository {
+	db, err := sql.Open("sqlite3", config.DBPath)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return &Repository{DB: db}, nil
+	return &Repository{DB: db}
 }
 
 func (r *Repository) Up() error {
 	return r.DB.Ping()
+}
+
+func (r *Repository) Close() error {
+	return r.DB.Close()
 }
