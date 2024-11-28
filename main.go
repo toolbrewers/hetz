@@ -28,7 +28,11 @@ func main() {
 	config.LoadMiddlewares(e)
 	config.LoadRoutes(e, controllers.New(repo))
 
-	if err := e.Start(os.Getenv("PORT")); err != http.ErrServerClosed {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = ":8000" // Default port
+	}
+	if err := e.Start(port); err != http.ErrServerClosed {
 		panic(fmt.Errorf("failed to start server: %w", err))
 	}
 }
