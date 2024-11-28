@@ -19,7 +19,7 @@ import (
 func (c *Controller) Signup(ctx echo.Context) error {
 	req := new(models.Signup)
 	if err := ctx.Bind(req); err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err)
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 
 	form, err := ctx.FormParams()
@@ -28,7 +28,7 @@ func (c *Controller) Signup(ctx echo.Context) error {
 	}
 
 	validate := validator.New()
-	for key, _ := range form {
+	for key := range form {
 		if fn, ok := models.SignupValidations[key]; ok {
 			if err := fn(validate, ctx.FormValue(key)); err != nil {
 				return ctx.String(http.StatusBadRequest, models.SignupHelpers[key])
