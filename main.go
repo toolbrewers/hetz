@@ -17,8 +17,8 @@ func main() {
 		panic(fmt.Errorf("failed to load app.yml or set env vars: %w", err))
 	}
 
-	repo, err := repository.New()
-	if err != nil {
+	repo := repository.New(repository.NewConfig())
+	if err := repo.Up(); err != nil {
 		panic(fmt.Errorf("failed to initialize repository: %w", err))
 	}
 
