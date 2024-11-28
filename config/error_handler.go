@@ -22,5 +22,7 @@ func HTTPErrorHandler(err error, ctx echo.Context) {
 		default:
 			ctx.NoContent(he.Code)
 		}
+	} else {
+		ctx.NoContent(http.StatusInternalServerError)
 	}
 }
