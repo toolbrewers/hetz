@@ -1,7 +1,8 @@
-package config
+package server
 
 import (
 	"context"
+	"hetz-client/config"
 	"log/slog"
 	"net/http"
 	"os"
@@ -12,7 +13,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
-func LoadMiddlewares(e *echo.Echo) {
+func LoadMiddlewares(e *echo.Echo, cfg *config.Config) {
 	// Recover middleware
 	// Prints panic stack trace and handles control to the centralized error handler
 	e.Use(middleware.Recover())
@@ -24,7 +25,7 @@ func LoadMiddlewares(e *echo.Echo) {
 	// CORS middlware
 	// Restricted to accept only requests from the same origin
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{os.Getenv("base-url")},
+		AllowOrigins: []string{cfg.BaseURL},
 		AllowMethods: []string{
 			http.MethodGet,
 			http.MethodHead,

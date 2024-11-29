@@ -7,7 +7,7 @@ help: # Show help for each of the Makefile recipes.
 .PHONY: generate
 generate: # Auto-generates code for .templ files and tailwindcss.
 	templ generate
-	tailwindcss build -o ./app/assets/stylesheets/tailwind.css --minify
+	tailwindcss build -o ./internal/assets/stylesheets/tailwind.css --minify
 
 .PHONY: migration
 migration: # Creates a new migration in db/migrations with the given name.

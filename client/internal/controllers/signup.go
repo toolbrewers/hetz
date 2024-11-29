@@ -3,11 +3,10 @@ package controllers
 import (
 	"errors"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 
-	"hetz/app/models"
+	"hetz-client/internal/models"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v5"
@@ -28,7 +27,7 @@ func (c *Controller) Signup(ctx echo.Context) error {
 	}
 
 	validate := validator.New()
-	for key, _ := range form {
+	for key := range form {
 		if fn, ok := models.SignupValidations[key]; ok {
 			if err := fn(validate, ctx.FormValue(key)); err != nil {
 				return ctx.String(http.StatusBadRequest, models.SignupHelpers[key])
@@ -58,13 +57,13 @@ func (c *Controller) Signup(ctx echo.Context) error {
 	token, err := jwt.NewWithClaims(
 		jwt.SigningMethodHS256,
 		jwt.MapClaims{
-			"iss": os.Getenv("APP_NAME"),
+			"iss": c.cfg.AppName,
 			"sub": strconv.Itoa(int(id)),
-			"aud": []string{os.Getenv("BASE_URL")},
+			"aud": []string{c.cfg.BaseURL},
 			"exp": time.Now().Add(24 * time.Hour).Unix(),
 			"nbf": time.Now().Unix(),
 			"iat": time.Now().Unix(),
-		}).SignedString([]byte("supersecretkey")) // TODO: Use a cookie to set this value
+		}).SignedString([]byte(c.cfg.JWTKey))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -73,7 +72,7 @@ func (c *Controller) Signup(ctx echo.Context) error {
 		Name:     "token",
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour),
-		Secure:   false, // TODO: Use a cookie to set this value
+		Secure:   c.cfg.SecureCookie,
 		HttpOnly: true,
 		Path:     "/",
 	})
