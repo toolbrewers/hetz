@@ -20,3 +20,6 @@ migrate-up: # Runs all the up migrations located at db/migrations.
 .PHONY: migrate-down
 migrate-down: # Runs all the down migrations located at db/migrations.
 	migrate -source file://db/migrations -database sqlite3://db/app.db down
+
+.PHONY: migrate-reset
+migrate-reset: migrate-down migrate-up
