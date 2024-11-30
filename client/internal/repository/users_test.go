@@ -40,7 +40,7 @@ func TestUnit_CreateUser(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			repo := repository.New("../../db/app.db")
+			repo := repository.New("../../db/client.db")
 			defer repo.Close()
 			defer tc.cleanup(repo.DB)
 

@@ -18,7 +18,7 @@ func main() {
 	}
 
 	cfg := config.New()
-	repo := repository.New("db/app.db")
+	repo := repository.New("db/client.db")
 	ctrl := controllers.New(cfg, repo)
 
 	e := echo.New()

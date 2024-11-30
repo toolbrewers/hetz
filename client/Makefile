@@ -15,11 +15,11 @@ migration: # Creates a new migration in db/migrations with the given name.
 
 .PHONY: migrate-up
 migrate-up: # Runs all the up migrations located at db/migrations.
-	migrate -source file://db/migrations -database sqlite3://db/app.db up
+	migrate -source file://db/migrations -database sqlite3://db/client.db up
 
 .PHONY: migrate-down
 migrate-down: # Runs all the down migrations located at db/migrations.
-	migrate -source file://db/migrations -database sqlite3://db/app.db down
+	migrate -source file://db/migrations -database sqlite3://db/client.db down
 
 .PHONY: migrate-reset
 migrate-reset: migrate-down migrate-up
