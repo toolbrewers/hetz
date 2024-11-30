@@ -19,3 +19,11 @@ func New(source string) *Repository {
 
 	return &Repository{DB: db}
 }
+
+func (r *Repository) Close() error {
+	return r.DB.Close()
+}
+
+func (r *Repository) Up() error {
+	return r.DB.Ping()
+}

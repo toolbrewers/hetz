@@ -19,7 +19,7 @@ func New(cfg *config.Config, repo *repository.Repository) *Controller {
 }
 
 func (c *Controller) Up(ctx echo.Context) error {
-	if err := c.repo.DB.Ping(); err != nil {
+	if err := c.repo.Up(); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
