@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"hetz-client/config"
 	"log/slog"
 	"net/http"
@@ -12,6 +13,14 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"golang.org/x/time/rate"
 )
+
+// Auth middleware
+func Auth(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		fmt.Println("auth")
+		return next(c)
+	}
+}
 
 func LoadMiddlewares(e *echo.Echo, cfg *config.Config) {
 	// Recover middleware
