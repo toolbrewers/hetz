@@ -45,6 +45,7 @@ func getDataFromCookie(c echo.Context) (token string, userId int, err error) {
 	return cookieToken.Value, userId, nil
 }
 
+// TODO: Move most of this to the DB query
 func ValidateToken(session *models.SessionToken, cookieToken string) error {
 	if session.ExpiresAt.Before(session.ExpiresAt) {
 		return echo.NewHTTPError(http.StatusUnauthorized)
