@@ -19,7 +19,7 @@ func (r *Repository) CreateSession(session *models.Session) error {
 
 func (r *Repository) GetSessionToken(token string) (*models.SessionToken, error) {
 	// get token and expires_at from session
-	query, _, err := goqu.Select("token", "expires_at", "deleted_at").From("sessions").Where(goqu.C("token").Eq(token)).ToSQL()
+	query, _, err := goqu.Select("token", "expires_at").From("sessions").Where(goqu.C("token").Eq(token)).ToSQL()
 
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func (r *Repository) GetSessionToken(token string) (*models.SessionToken, error)
 
 	var session models.SessionToken
 
-	if err := r.DB.QueryRow(query).Scan(&session.Token, &session.ExpiresAt, &session.DeletedAt); err != nil {
+	if err := r.DB.QueryRow(query).Scan(&session.Token, &session.ExpiresAt); err != nil {
 		return nil, err
 	}
 
