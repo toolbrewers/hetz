@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS sessions (
 CREATE INDEX idx_token ON sessions(token);
 
 CREATE TABLE IF NOT EXISTS roles (
-    name            TEXT        NOT NULL PRIMARY KEY,
+    id              INTEGER     PRIMARY KEY AUTOINCREMENT,
+    name            TEXT        NOT NULL,
     created_at      DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at      DATETIME,
     deleted_at      DATETIME
