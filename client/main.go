@@ -25,7 +25,7 @@ func main() {
 	e.HTTPErrorHandler = server.HTTPErrorHandler
 
 	server.LoadMiddlewares(e, cfg, repo)
-	server.LoadRoutes(e, ctrl)
+	server.LoadRoutes(e, ctrl, repo)
 
 	if err := e.Start(cfg.Port); err != nil {
 		panic(fmt.Errorf("failed to start server: %w", err))
