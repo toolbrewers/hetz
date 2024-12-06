@@ -7,8 +7,8 @@ import (
 	"hetz-client/internal/auth"
 )
 
-func TestGenerateToken(t *testing.T) {
-	token, err := auth.GenerateToken(time.Hour * 24)
+func TestGenerateTokenWithDuration(t *testing.T) {
+	token, err := auth.GenerateTokenWithDuration(time.Hour * 24)
 	if err != nil {
 		t.Errorf("Error generating token: %v", err)
 	}

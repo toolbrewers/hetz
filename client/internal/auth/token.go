@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func GenerateToken(tokenDuration time.Duration) (string, error) {
+func GenerateTokenWithDuration(tokenDuration time.Duration) (string, error) {
 
 	formattedDuration := time.Now().Add(tokenDuration).Format("20060102150405")
 	randomBytesLength := 32 - (len(formattedDuration) / 2)
