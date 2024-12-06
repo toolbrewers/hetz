@@ -1,16 +1,17 @@
-package repository
+package repository_test
 
 import (
 	"hetz-client/internal/models"
+	"hetz-client/internal/repository"
 	"testing"
 )
 
-var repo *Repository
+var repo *repository.Repository
 
 const roleName = "test-role"
 
-func openRepo() *Repository {
-	localRepo := New("../../db/client.db")
+func openRepo() *repository.Repository {
+	localRepo := repository.New("../../db/client.db")
 	repo = localRepo
 	return localRepo
 }
