@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS sessions (
     id              INTEGER     PRIMARY KEY AUTOINCREMENT,
     user_id         INTEGER     NOT NULL,
-    token           TEXT        NOT NULL, -- Varchar(64) is all that is needed
+    token           TEXT        UNIQUE NOT NULL, -- Varchar(64) is all that is needed
     expires_at      DATETIME    NOT NULL,
     created_at      DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at      DATETIME,
