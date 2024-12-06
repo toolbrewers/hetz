@@ -65,8 +65,12 @@ func ValidateToken(session *models.SessionToken, cookieToken string) error {
 		fmt.Println("Error parsing created_at: ", err)
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
-	fmt.Println("Created at: ", created_at)
-	fmt.Println("Expires at: ", session.ExpiresAt)
+	bufferBefore := created_at.Add(-1 * time.Minute)
+	bufferAfter := created_at.Add(1 * time.Minute)
+	if session.ExpiresAt.Before(bufferBefore) || session.ExpiresAt.After(bufferAfter) {
+		fmt.Println("Session expired")
+		return echo.NewHTTPError(http.StatusUnauthorized)
+	}
 
 	return nil
 }
