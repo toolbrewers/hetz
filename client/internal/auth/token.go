@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Takes in a duration and returns a token with the duration encoded in the token
 func GenerateTokenWithDuration(tokenDuration time.Duration) (string, error) {
 
 	formattedDuration := time.Now().Add(tokenDuration).Format("20060102150405")
@@ -20,6 +21,7 @@ func GenerateTokenWithDuration(tokenDuration time.Duration) (string, error) {
 	return token, nil
 }
 
+// Takes in expiry time and returns a token with the expiry time encoded in the token
 func GenerateTokenExpiresAt(tokenExpiresAt time.Time) (string, error) {
 	formattedDuration := tokenExpiresAt.Format("20060102150405")
 	randomBytesLength := 32 - (len(formattedDuration) / 2)
