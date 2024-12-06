@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"hetz-client/internal/models"
 	"hetz-client/internal/repository"
 	"net/http"
@@ -12,15 +11,12 @@ import (
 )
 
 func ValidateSession(c echo.Context, repo *repository.Repository) error {
-	token, userId, err := getDataFromCookie(c)
+	token, _, err := getDataFromCookie(c)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
-	fmt.Println("Token is: ", token)
-	fmt.Println("User ID is: ", userId)
 	session, err := repo.GetSessionToken(token)
 	if err != nil {
-		fmt.Println("Error getting session token: ", err)
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 
@@ -51,24 +47,21 @@ func getDataFromCookie(c echo.Context) (token string, userId int, err error) {
 
 func ValidateToken(session *models.SessionToken, cookieToken string) error {
 	if session.ExpiresAt.Before(session.ExpiresAt) {
-		fmt.Println("Session expired")
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 	if session.Token != cookieToken {
-		fmt.Println("Token mismatch")
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 
 	// take first 14 digits and convert them to time.Time
 	created_at, err := time.Parse("20060102150405", session.Token[:14])
 	if err != nil {
-		fmt.Println("Error parsing created_at: ", err)
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
+	// check if session.ExpiresAt is within 1 minute of first 14 digits of token
 	bufferBefore := created_at.Add(-1 * time.Minute)
 	bufferAfter := created_at.Add(1 * time.Minute)
 	if session.ExpiresAt.Before(bufferBefore) || session.ExpiresAt.After(bufferAfter) {
-		fmt.Println("Session expired")
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 
