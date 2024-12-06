@@ -24,7 +24,7 @@ func main() {
 	e := echo.New()
 	e.HTTPErrorHandler = server.HTTPErrorHandler
 
-	server.LoadMiddlewares(e, cfg)
+	server.LoadMiddlewares(e, cfg, repo)
 	server.LoadRoutes(e, ctrl)
 
 	if err := e.Start(cfg.Port); err != nil {

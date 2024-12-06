@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"hetz-client/config"
+	"hetz-client/internal/repository"
 	"log/slog"
 	"net/http"
 	"os"
@@ -22,7 +23,7 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func LoadMiddlewares(e *echo.Echo, cfg *config.Config) {
+func LoadMiddlewares(e *echo.Echo, cfg *config.Config, repo *repository.Repository) {
 	// Recover middleware
 	// Prints panic stack trace and handles control to the centralized error handler
 	e.Use(middleware.Recover())
