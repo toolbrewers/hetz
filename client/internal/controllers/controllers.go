@@ -23,5 +23,5 @@ func (c *Controller) Up(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	return ctx.NoContent(http.StatusOK)
+	return ctx.HTML(http.StatusOK, "<div>Success</div>")
 }

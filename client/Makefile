@@ -14,8 +14,9 @@ migration: # Creates a new migration in db/migrations with the given name.
 	migrate create -ext sql -dir db/migrations -seq -digits 4 $(NAME)
 
 .PHONY: migrate-up
-migrate-up: # Runs all the up migrations located at db/migrations.
+migrate-up: # Runs all the up migrations located at db/migrations and sets WAL mode.
 	migrate -source file://db/migrations -database sqlite3://db/client.db up
+	sqlite3 db/client.db "PRAGMA journal_mode=WAL;"
 
 .PHONY: migrate-down
 migrate-down: # Runs all the down migrations located at db/migrations.
