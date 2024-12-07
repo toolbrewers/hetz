@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"hetz-client/config"
-	"hetz-client/internal/auth"
+	"hetz-client/internal/auth/token"
 	"hetz-client/internal/repository"
 	"log/slog"
 	"net/http"
@@ -20,7 +20,7 @@ import (
 func NewAuthMiddleware(repo *repository.Repository) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			if err := auth.ValidateSession(c, repo); err != nil {
+			if err := token.ValidateSession(c, repo); err != nil {
 				return err
 			}
 			return next(c)

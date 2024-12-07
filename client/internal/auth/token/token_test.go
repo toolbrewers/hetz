@@ -1,14 +1,14 @@
-package auth_test
+package token_test
 
 import (
 	"testing"
 	"time"
 
-	"hetz-client/internal/auth"
+	token "hetz-client/internal/auth/token"
 )
 
 func TestGenerateTokenWithDuration(t *testing.T) {
-	token, err := auth.GenerateTokenWithDuration(time.Hour * 24)
+	token, err := token.GenerateTokenWithDuration(time.Hour * 24)
 	if err != nil {
 		t.Errorf("Error generating token: %v", err)
 	}
@@ -20,7 +20,7 @@ func TestGenerateTokenWithDuration(t *testing.T) {
 
 func TestGenerateTokenExpiresAt(t *testing.T) {
 	expiryTime := time.Now().Add(time.Hour * 24)
-	token, err := auth.GenerateTokenExpiresAt(expiryTime)
+	token, err := token.GenerateTokenExpiresAt(expiryTime)
 	if err != nil {
 		t.Errorf("Error generating token: %v", err)
 	}

@@ -1,4 +1,4 @@
-package auth
+package token
 
 import (
 	"hetz-client/internal/models"
