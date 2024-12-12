@@ -7,6 +7,8 @@ type Session struct {
 	UserID    int       `db:"user_id"`
 	Token     string    `db:"token"`
 	ExpiresAt time.Time `db:"expires_at"`
+	UserAgent string    `db:"user_agent"`
+	IPAddress string    `db:"ip_address"`
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
 }

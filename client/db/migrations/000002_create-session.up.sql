@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS sessions (
     user_id         INTEGER     NOT NULL,
     token           TEXT        UNIQUE NOT NULL, -- Varchar(64) is all that is needed
     expires_at      DATETIME    NOT NULL,
+    user_agent      TEXT        NOT NULL,
+    ip_address      TEXT        NOT NULL,
     created_at      DATETIME    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at      DATETIME,
     deleted_at      DATETIME,
