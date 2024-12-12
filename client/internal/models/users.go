@@ -12,3 +12,7 @@ type GetUser struct {
 	Email    string
 	Username string
 }
+
+type GetUserPassword struct {
+	Password string
+}
