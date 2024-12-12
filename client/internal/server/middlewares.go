@@ -3,6 +3,8 @@ package server
 import (
 	"context"
 	"hetz-client/config"
+	"hetz-client/internal/auth/token"
+	"hetz-client/internal/repository"
 	"log/slog"
 	"net/http"
 	"os"
@@ -13,7 +15,20 @@ import (
 	"golang.org/x/time/rate"
 )
 
-func LoadMiddlewares(e *echo.Echo, cfg *config.Config) {
+// NewAuthMiddleware creates an Auth middleware with the given repository
+// Yeah it's messy, but this has to be done when we don't have global repo variable :(
+func NewAuthMiddleware(repo *repository.Repository) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			if err := token.ValidateSession(c, repo); err != nil {
+				return err
+			}
+			return next(c)
+		}
+	}
+}
+
+func LoadMiddlewares(e *echo.Echo, cfg *config.Config, repo *repository.Repository) {
 	// Recover middleware
 	// Prints panic stack trace and handles control to the centralized error handler
 	e.Use(middleware.Recover())
@@ -89,4 +104,5 @@ func LoadMiddlewares(e *echo.Echo, cfg *config.Config) {
 			return ctx.JSON(http.StatusTooManyRequests, nil)
 		},
 	}))
+
 }

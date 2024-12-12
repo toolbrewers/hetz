@@ -30,3 +30,6 @@ go.work.sum
 
 # db file
 client/db/client.db
+client/db/client.db-wal
+client/db/client.db-shm
+
